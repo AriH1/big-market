@@ -1,0 +1,1 @@
+package com.share.infrastructure.gateway.dto;
