@@ -1,0 +1,8 @@
+25-03-21.00:20:21.880 [main            ] INFO  AwardDaoTest           - Starting AwardDaoTest using Java 21.0.4 on DESKTOP-DJN13UV with PID 9008 (started by MUZ in G:\prog\java\big-market\big-market-app)
+25-03-21.00:20:21.881 [main            ] INFO  AwardDaoTest           - The following 1 profile is active: "dev"
+25-03-21.00:20:24.017 [main            ] INFO  AwardDaoTest           - Started AwardDaoTest in 2.521 seconds (JVM running for 3.3)
+25-03-21.00:20:24.259 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+25-03-21.00:20:24.662 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+25-03-21.00:20:24.870 [main            ] INFO  AwardDaoTest           - 测试结果:[{"awardConfig":"1","awardDesc":"随机积分","awardId":101,"awardKey":"1"},{"awardConfig":"1","awardDesc":"5次使用","awardId":102,"awardKey":"1"},{"awardConfig":"1","awardDesc":"10次使用","awardId":103,"awardKey":"11"},{"awardConfig":"1","awardDesc":"20次使用","awardId":104,"awardKey":"1"},{"awardConfig":"1","awardDesc":"30次使用","awardId":105,"awardKey":"1"},{"awardConfig":"1","awardDesc":"三等奖","awardId":106,"awardKey":"1"},{"awardConfig":"1","awardDesc":"二等奖","awardId":107,"awardKey":"1"},{"awardConfig":"1","awardDesc":"一等奖","awardId":108,"awardKey":"1"}]
+25-03-21.00:20:24.886 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+25-03-21.00:20:24.893 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
