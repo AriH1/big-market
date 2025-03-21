@@ -1,6 +1,6 @@
 package com.share.infrastructure.persistent.dao;
 
-import com.share.infrastructure.persistent.po.Award;
+import com.share.domain.strategy.model.entity.StrategyAwardEntity;
 import com.share.infrastructure.persistent.po.StrategyAward;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,4 +11,5 @@ public interface IStrategyAwardDao {
 
     List<StrategyAward> queryStrategyAwardList();
 
+    List<StrategyAward> queryStrategyAwardListByStrategyId(long strategyId);
 }
