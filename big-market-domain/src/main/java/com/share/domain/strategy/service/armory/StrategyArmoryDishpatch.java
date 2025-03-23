@@ -30,7 +30,7 @@ public class StrategyArmoryDishpatch implements IStrategyArmory,IStrategyDispatc
     public boolean assembleLotteryStrategy(Long strategyId){
         //1.查询策略配置
         List<StrategyAwardEntity> strategyAwardEntities = repository.queryStrategyAwardList(strategyId);
-        if(strategyAwardEntities==null && strategyAwardEntities.isEmpty())return false;
+        if(strategyAwardEntities==null || strategyAwardEntities.isEmpty())return false;
         //2.装配
         assembleLotteryStrategy(String.valueOf(strategyId),strategyAwardEntities);
         //3.权重策略配置 适用于rule_weight

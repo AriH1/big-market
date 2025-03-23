@@ -29,7 +29,7 @@ import java.util.List;
 public class StrategyRepository implements IStrategyRepository {
 
     @Autowired
-    private IStrategyRuleDao StrategyRuleDao;
+    private IStrategyRuleDao strategyRuleDao;
 
     @Autowired
     private IStrategyDao strategyDao;
@@ -135,7 +135,7 @@ public class StrategyRepository implements IStrategyRepository {
         StrategyRule strategyRuleReq =new StrategyRule();
         strategyRuleReq.setStrategyId(strategyId);
         strategyRuleReq.setRuleModel(ruleModel);
-        StrategyRule strategyRule = StrategyRuleDao.queryStrategyRule(strategyRuleReq);
+        StrategyRule strategyRule = strategyRuleDao.queryStrategyRule(strategyRuleReq);
         return StrategyRuleEntity.builder()
                 .strategyId(strategyRule.getStrategyId())
                 .awardId(strategyRule.getAwardId())
@@ -144,5 +144,16 @@ public class StrategyRepository implements IStrategyRepository {
                 .ruleValue(strategyRule.getRuleValue())
                 .ruleDesc(strategyRule.getRuleDesc())
                 .build();
+    }
+
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
+        StrategyRule strategyRule =new StrategyRule();
+        strategyRule.setStrategyId(strategyId);
+        strategyRule.setAwardId(awardId);
+        strategyRule.setRuleModel(ruleModel);
+        return strategyRuleDao.queryStrategyRuleValue(strategyRule).getRuleValue();
+
+
     }
 }
