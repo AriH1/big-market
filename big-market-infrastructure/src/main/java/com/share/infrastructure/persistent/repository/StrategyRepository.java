@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.share.domain.strategy.model.entity.StrategyAwardEntity;
 import com.share.domain.strategy.model.entity.StrategyEntity;
 import com.share.domain.strategy.model.entity.StrategyRuleEntity;
+import com.share.domain.strategy.model.vo.StrategyAwardRuleModelVo;
 import com.share.domain.strategy.repository.IStrategyRepository;
 import com.share.infrastructure.persistent.dao.IStrategyAwardDao;
 import com.share.infrastructure.persistent.dao.IStrategyDao;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -152,8 +154,18 @@ public class StrategyRepository implements IStrategyRepository {
         strategyRule.setStrategyId(strategyId);
         strategyRule.setAwardId(awardId);
         strategyRule.setRuleModel(ruleModel);
-        return strategyRuleDao.queryStrategyRuleValue(strategyRule).getRuleValue();
+        return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
 
+    @Override
+    public StrategyAwardRuleModelVo queryAwardRuleModel(Long strategyId, Integer awardId) {
+        StrategyAward strategyAward = new StrategyAward();
+        strategyAward.setStrategyId(strategyId);
+        strategyAward.setAwardId(awardId);
+        String ruleModel = strategyAwardDao.queryStrategyAwardRuleModels(strategyAward);
+        return StrategyAwardRuleModelVo.builder()
+                .ruleModels(ruleModel)
+                .build();
 
     }
 }

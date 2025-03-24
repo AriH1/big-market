@@ -25,6 +25,7 @@ public class RuleBlackListLogicFilter implements ILogicFilter<RuleActionEntity.R
     public RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> filter(RuleMatterEntity ruleMatterEntity) {
         log.info("规则过滤-黑名单 userId:{} strategyId:{} ruleModel:{}",ruleMatterEntity.getUserId(),ruleMatterEntity.getStrategyId(),ruleMatterEntity.getRuleModel());
         String userId = ruleMatterEntity.getUserId();
+
         // 查询规则值配置
         String ruleValue = repository.queryStrategyRuleValue(ruleMatterEntity.getStrategyId(),ruleMatterEntity.getAwardId(),ruleMatterEntity.getRuleModel());
         String[] splitRuleValue = ruleValue.split(Constants.COLON);

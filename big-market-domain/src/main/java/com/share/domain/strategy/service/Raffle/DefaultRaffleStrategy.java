@@ -32,6 +32,10 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
     //检查前置逻辑
     @Override
     protected RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> doCheckRaffleBeforeLogic(RaffleFactorEntity raffleFactorEntity, String... logics) {
+        if(null == logics ||0 ==logics.length)return RuleActionEntity.<RuleActionEntity.RaffleBeforeEntity>builder()
+                .code(RuleLogicCheckTypeVo.ALLOW.getCode())
+                .info(RuleLogicCheckTypeVo.ALLOW.getInfo())
+                .build();
         //通过反射，获取当前存在的规则map<规则名，过滤器实体>
         Map<String, ILogicFilter<RuleActionEntity.RaffleBeforeEntity>> logicFilterGroup = logicFactory.openLogicFilter();
 
@@ -46,7 +50,7 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
             ILogicFilter<RuleActionEntity.RaffleBeforeEntity> logicFilter = logicFilterGroup.get(DefaultLogicFactory.LogicModel.RULE_BLACKLIST.getCode());
             RuleMatterEntity ruleMatterEntity = new RuleMatterEntity();
             ruleMatterEntity.setUserId(raffleFactorEntity.getUserId());
-            ruleMatterEntity.setAwardId(ruleMatterEntity.getAwardId());
+            ruleMatterEntity.setAwardId(raffleFactorEntity.getAwardId());
             ruleMatterEntity.setStrategyId(raffleFactorEntity.getStrategyId());
             ruleMatterEntity.setRuleModel(DefaultLogicFactory.LogicModel.RULE_BLACKLIST.getCode());
             RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> ruleActionEntity = logicFilter.filter(ruleMatterEntity);
@@ -68,7 +72,7 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
             ILogicFilter<RuleActionEntity.RaffleBeforeEntity> logicFilter = logicFilterGroup.get(ruleModel);
             RuleMatterEntity ruleMatterEntity = new RuleMatterEntity();
             ruleMatterEntity.setUserId(raffleFactorEntity.getUserId());
-            ruleMatterEntity.setAwardId(ruleMatterEntity.getAwardId());
+            ruleMatterEntity.setAwardId(raffleFactorEntity.getAwardId());
             ruleMatterEntity.setStrategyId(raffleFactorEntity.getStrategyId());
             ruleMatterEntity.setRuleModel(ruleModel);
             ruleActionEntity = logicFilter.filter(ruleMatterEntity);
@@ -77,6 +81,34 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
             if (!RuleLogicCheckTypeVo.ALLOW.getCode().equals(ruleActionEntity.getCode())) return ruleActionEntity;
         }
 
+        return ruleActionEntity;
+    }
+
+    @Override
+    protected RuleActionEntity<RuleActionEntity.RaffleCenterEntity> doCheckRaffleCenterLogic(RaffleFactorEntity raffleFactorEntity, String... logics) {
+        if(null == logics ||0 ==logics.length)return RuleActionEntity.<RuleActionEntity.RaffleCenterEntity>builder()
+                .code(RuleLogicCheckTypeVo.ALLOW.getCode())
+                .info(RuleLogicCheckTypeVo.ALLOW.getInfo())
+                .build();
+        Map<String,ILogicFilter<RuleActionEntity.RaffleCenterEntity>> logicFilterGroup = logicFactory.openLogicFilter();
+
+
+        //新建或置空防止黑名单中对ruleActionEntity，防止黑名单中对ruleActionEntity的操作产生影响
+        RuleActionEntity<RuleActionEntity.RaffleCenterEntity> ruleActionEntity = null;
+        //顺序执行规则
+        for (String ruleModel : logics) {
+            //获取过滤器实体
+            ILogicFilter<RuleActionEntity.RaffleCenterEntity> logicFilter = logicFilterGroup.get(ruleModel);
+            RuleMatterEntity ruleMatterEntity = new RuleMatterEntity();
+            ruleMatterEntity.setUserId(raffleFactorEntity.getUserId());
+            ruleMatterEntity.setAwardId(raffleFactorEntity.getAwardId());
+            ruleMatterEntity.setStrategyId(raffleFactorEntity.getStrategyId());
+            ruleMatterEntity.setRuleModel(ruleModel);
+            ruleActionEntity = logicFilter.filter(ruleMatterEntity);
+            // 非放行结果则顺序过滤
+            log.info("抽奖中规则过滤 userId: {} ruleModel: {} code: {} info: {}", raffleFactorEntity.getUserId(), ruleModel, ruleActionEntity.getCode(), ruleActionEntity.getInfo());
+            if (!RuleLogicCheckTypeVo.ALLOW.getCode().equals(ruleActionEntity.getCode())) return ruleActionEntity;
+        }
         return ruleActionEntity;
     }
 }
