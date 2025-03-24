@@ -4,18 +4,23 @@
 
     <resultMap id="dataMap" type="com.share.infrastructure.persistent.po.Strategy">
         <id column="id" property="id"/>
-        <result column="award_id" property="awardId"/>
-        <result column="award_key" property="awardKey"/>
-        <result column="award_config" property="awardConfig"/>
-        <result column="award_desc" property="awardDesc"/>
+        <result column="strategy_id" property="strategyId"/>
+        <result column="strategy_desc" property="strategyDesc"/>
+        <result column="rule_models" property="ruleModels"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
 
     <select id="queryStrategyList" resultMap="dataMap">
-        select award_id, award_key, award_config, award_desc
-        from award
+        select strategy_id, strategy_desc
+        from Strategy
         limit 10
+    </select>
+
+    <select id="queryStrategyByStrategyId" parameterType="com.share.infrastructure.persistent.po.Strategy" resultMap="dataMap">
+        select strategy_id, strategy_desc,rule_models
+        from Strategy
+        where strategy_id = #{strategyId}
     </select>
 </mapper>
